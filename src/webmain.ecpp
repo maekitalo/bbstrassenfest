@@ -1,0 +1,28 @@
+<%session scope="shared">
+</%session>
+<%request scope="shared">
+</%request>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="bbstrassenfest application">
+    <link rel="stylesheet" href="/bbstrassenfest.css" type="text/css">
+  </head>
+  <body>
+    <div id="header">
+      <span id="title">bbstrassenfest application</span>
+    </div>
+
+    <div id="menu">
+      <ul class="nav">
+        <li class="navitem"><a href="/">Home</a></li>
+        <li class="navitem"><a href="/strassenfeste">strassenfeste</a></li>
+      </ul>
+    </div>
+
+    <div id="content">
+       <& (request.getArg("next")) qparam >
+    </div>
+  </body>
+</html>
