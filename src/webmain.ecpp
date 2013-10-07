@@ -8,16 +8,20 @@
     <meta charset="utf-8">
     <meta name="description" content="bbstrassenfest application">
     <link rel="stylesheet" href="/bbstrassenfest.css" type="text/css">
+    <link href="/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
+	<script src="/jquery-ui-1.10.3.custom/js/jquery-1.9.1.js"></script>
+	<script src="/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
   </head>
   <body>
     <div id="header">
-      <span id="title">bbstrassenfest application</span>
+      <span id="title">Berlin Brandenburger Strassenfeste 2013</span>
     </div>
 
     <div id="menu">
       <ul class="nav">
         <li class="navitem"><a href="/">Home</a></li>
         <li class="navitem"><a href="/strassenfeste">strassenfeste</a></li>
+        <li class="navitem"><a href="/suche">suche</a></li>
       </ul>
     </div>
 
