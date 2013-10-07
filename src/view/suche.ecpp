@@ -1,0 +1,89 @@
+<%args>
+q;
+bezirk;
+von_from;
+von_to;
+</%args>
+<%application scope="shared">
+std::vector<std::string> bezirke;
+</%application>
+<%request scope="shared" include="model/strassenfestresult.h">
+model::StrassenfestResult strassenfestResult;
+</%request>
+<script>
+
+  $(function() {
+    $(".date").datepicker({
+      dateFormat : "dd.mm.yy"
+    }, $.datepicker.regional['de'])
+        .css('width', 80);
+  })
+
+</script>
+<%cpp>
+
+// define a shortcut
+const model::Strassenfeste& strassenfeste = strassenfestResult.strassenfeste();
+
+</%cpp>
+<h1>Suche</h1>
+
+<form method="post">
+ <table class="form">
+  <tr>
+    <th>Stichwortsuche:</th>
+    <td><input type="text" name="q" value="<$q$>"></td>
+  </tr>
+  <tr>
+   <th>Bezirk:</th>
+   <td>
+    <select name="bezirk">
+% for (unsigned n = 0; n < bezirke.size(); ++n) {
+     <option value="<$ bezirke[n] $>"<? bezirk == bezirke[n] ? " selected"?>><$ bezirke[n] $></option>
+% }
+    </select>
+   </td>
+  </tr>
+  <tr>
+    <th>Beginn zwsichen...:</th>
+    <td><input type="text" class="date" id="von_from" name="von_from" value="<$ von_from $>"></td>
+  </tr>
+  <tr>
+    <th>...und...:</th>
+    <td><input type="text" class="date" id="von_to" name="von_to" value="<$ von_to $>"></td>
+  </tr>
+  <tr>
+    <th></th>
+    <td><input type="submit" id="suchen" name="suchen" value="Suchen"></td>
+  </tr>
+ </table>
+</form>
+
+% if (!strassenfeste.empty()) {
+
+<hr>
+
+<div class="resultcount"><span class="resultcount"><$ strassenfeste.size() $></span> Ergebnisse gefunden</div>
+
+<table class="result">
+  <tr>
+   <th>Bezeichnung</th>
+   <th>Bezirk</th>
+   <th>von</th>
+   <th>bis</th>
+  </tr>
+
+% for (unsigned n = 0; n < strassenfeste.size(); ++n) {
+
+  <tr>
+   <td><$ strassenfeste[n].bezeichnung() $></td>
+   <td><$ strassenfeste[n].bezirk() $></td>
+   <td><$ strassenfeste[n].von().toIsoString() $></td>
+   <td><$ strassenfeste[n].bis().toIsoString() $></td>
+  </tr>
+
+% }
+
+</table>
+
+% }

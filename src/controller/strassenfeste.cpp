@@ -6,7 +6,7 @@
 #include <model/strassenfest.h>
 #include <manager/strassenfestmanager.h>
 
-log_define("controller.page1")
+log_define("strasenfeste.controller")
 
 namespace
 {
@@ -20,7 +20,7 @@ namespace
 
   unsigned strassenfesteController::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
   {
-    log_debug("strassenfestController");
+    log_debug("strassenfestController; q=" << qparam.getUrl());
 
     TNT_APPLICATION_SHARED_VAR(std::vector<std::string>, bezirke, ());
 

@@ -25,12 +25,16 @@ bezirk;
    <th>von</th>
    <th>bis</th>
   </tr>
+
 % for (unsigned n = 0; n < strassenfeste.size(); ++n) {
+
   <tr>
    <td><$ strassenfeste[n].bezeichnung() $></td>
    <td><$ strassenfeste[n].bezirk() $></td>
    <td><$ strassenfeste[n].von().toIsoString() $></td>
    <td><$ strassenfeste[n].bis().toIsoString() $></td>
   </tr>
+
 % }
+
 </table>

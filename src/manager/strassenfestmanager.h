@@ -7,6 +7,7 @@
 #define STRASSENFESTMANAGER_H
 
 #include <model/strassenfest.h>
+#include <model/strassenfestresult.h>
 #include <cxxtools/http/client.h>
 #include <cxxtools/date.h>
 
@@ -25,9 +26,13 @@ class StrassenfestManager
     { }
 
     std::vector<std::string> getBezirke();
+
+    model::StrassenfestResult search(const std::string& keyword, const std::string& bezirk,
+        const cxxtools::Date& von_from, const cxxtools::Date& von_to, const cxxtools::Date& bis,
+        unsigned ipp, unsigned page);
+
     model::Strassenfeste getAll();
     model::Strassenfeste getAllByBezirk(const std::string& bezirk);
-    model::Strassenfeste search(const std::string& keyword, const cxxtools::Date& from, const cxxtools::Date& to);
 };
 
 }

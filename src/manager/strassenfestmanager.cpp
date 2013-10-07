@@ -10,8 +10,10 @@
 #include <cxxtools/json.h>
 #include <cxxtools/log.h>
 #include <cxxtools/query_params.h>
+#include <cxxtools/convert.h>
+#include <stdio.h>
 
-log_define("strassenfest.manager");
+log_define("strassenfest.manager")
 
 namespace manager
 {
@@ -80,9 +82,47 @@ model::Strassenfeste StrassenfestManager::getAllByBezirk(const std::string& bezi
   return r.strassenfeste();
 }
 
-model::Strassenfeste StrassenfestManager::search(const std::string& keyword, const cxxtools::Date& from, const cxxtools::Date& to)
+model::StrassenfestResult StrassenfestManager::search(const std::string& keyword, const std::string& bezirk,
+    const cxxtools::Date& von_from, const cxxtools::Date& von_to, const cxxtools::Date& bis,
+    unsigned ipp, unsigned page)
 {
-  return model::Strassenfeste();
+  char buffer[40];
+
+  cxxtools::net::Uri uri = Configuration::it().berlinUrl();
+
+  cxxtools::QueryParams q;
+  q.add("q", keyword);
+  q.add("bezirk", bezirk);
+
+  if (von_from != cxxtools::Date())
+  {
+    sprintf(buffer, "%02u.%02u.%04d", von_from.day(), von_from.month(), von_from.year());
+    q.add("von_from", buffer);
+  }
+
+  if (von_to != cxxtools::Date())
+  {
+    sprintf(buffer, "%02u.%02u.%04d", von_to.day(), von_to.month(), von_to.year());
+    q.add("von_to", buffer);
+  }
+
+  if (bis != cxxtools::Date())
+  {
+    sprintf(buffer, "%02u.%02u.%04d", bis.day(), bis.month(), bis.year());
+    q.add("bis", buffer);
+  }
+
+  q.add("ipp", cxxtools::convert<std::string>(ipp));
+  q.add("page", cxxtools::convert<std::string>(page));
+
+  std::string results = _client.get(uri.path() + '?' + q.getUrl());
+
+  std::istringstream in(results);
+
+  model::StrassenfestResult r;
+  in >> cxxtools::Json(r);
+
+  return r;
 }
 
 }
