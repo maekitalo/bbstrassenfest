@@ -7,8 +7,8 @@ von_to;
 <%application scope="shared">
 std::vector<std::string> bezirke;
 </%application>
-<%request scope="shared" include="model/strassenfestresult.h">
-model::StrassenfestResult strassenfestResult;
+<%request scope="shared" include="strassenfestresult.h">
+StrassenfestResult strassenfestResult;
 </%request>
 <script>
 
@@ -23,12 +23,12 @@ model::StrassenfestResult strassenfestResult;
 <%cpp>
 
 // define a shortcut
-const model::Strassenfeste& strassenfeste = strassenfestResult.strassenfeste();
+const Strassenfeste& strassenfeste = strassenfestResult.strassenfeste();
 
 </%cpp>
 <h1>Suche</h1>
 
-<form method="post">
+<form>
  <table class="form">
   <tr>
     <th>Stichwortsuche:</th>

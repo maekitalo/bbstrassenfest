@@ -3,8 +3,8 @@
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
 #include <cxxtools/log.h>
-#include <model/strassenfestresult.h>
-#include <manager/strassenfestmanager.h>
+#include <strassenfestresult.h>
+#include <strassenfestmanager.h>
 
 log_define("suche.controller")
 
@@ -21,11 +21,11 @@ namespace
   unsigned sucheController::operator() (tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
   {
     TNT_APPLICATION_SHARED_VAR(std::vector<std::string>, bezirke, ());
-    TNT_REQUEST_SHARED_VAR(model::StrassenfestResult, strassenfestResult, ());
+    TNT_REQUEST_SHARED_VAR(StrassenfestResult, strassenfestResult, ());
 
     log_debug("sucheController; q=" << qparam.getUrl());
 
-    manager::StrassenfestManager manager;
+    StrassenfestManager manager;
 
     if (bezirke.empty())
     {

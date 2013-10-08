@@ -3,8 +3,8 @@
  *
  */
 
-#include <manager/strassenfestmanager.h>
-#include <model/strassenfestresult.h>
+#include <strassenfestmanager.h>
+#include <strassenfestresult.h>
 #include <configuration.h>
 #include <cxxtools/net/uri.h>
 #include <cxxtools/json.h>
@@ -14,9 +14,6 @@
 #include <stdio.h>
 
 log_define("strassenfest.manager")
-
-namespace manager
-{
 
 StrassenfestManager::StrassenfestManager()
 {
@@ -48,20 +45,20 @@ std::vector<std::string> StrassenfestManager::getBezirke()
   return ret;
 }
 
-model::Strassenfeste StrassenfestManager::getAll()
+Strassenfeste StrassenfestManager::getAll()
 {
   cxxtools::net::Uri uri = Configuration::it().berlinUrl();
   std::string results = _client.get(uri.path() + "?q=&bezirk=--+Alles+--&von_from=&von_to=&bis=&ipp=10000");
 
   std::istringstream in(results);
 
-  model::StrassenfestResult r;
+  StrassenfestResult r;
   in >> cxxtools::Json(r);
 
   return r.strassenfeste();
 }
 
-model::Strassenfeste StrassenfestManager::getAllByBezirk(const std::string& bezirk)
+Strassenfeste StrassenfestManager::getAllByBezirk(const std::string& bezirk)
 {
   cxxtools::net::Uri uri = Configuration::it().berlinUrl();
 
@@ -76,13 +73,13 @@ model::Strassenfeste StrassenfestManager::getAllByBezirk(const std::string& bezi
 
   std::istringstream in(results);
 
-  model::StrassenfestResult r;
+  StrassenfestResult r;
   in >> cxxtools::Json(r);
 
   return r.strassenfeste();
 }
 
-model::StrassenfestResult StrassenfestManager::search(const std::string& keyword, const std::string& bezirk,
+StrassenfestResult StrassenfestManager::search(const std::string& keyword, const std::string& bezirk,
     const cxxtools::Date& von_from, const cxxtools::Date& von_to, const cxxtools::Date& bis,
     unsigned ipp, unsigned page)
 {
@@ -119,10 +116,8 @@ model::StrassenfestResult StrassenfestManager::search(const std::string& keyword
 
   std::istringstream in(results);
 
-  model::StrassenfestResult r;
+  StrassenfestResult r;
   in >> cxxtools::Json(r);
 
   return r;
-}
-
 }

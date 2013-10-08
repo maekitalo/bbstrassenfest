@@ -3,7 +3,7 @@
  *
  */
 
-#include <model/strassenfest.h>
+#include <strassenfest.h>
 #include <cxxtools/serializationinfo.h>
 
 namespace
@@ -23,9 +23,6 @@ namespace
       return cxxtools::Date(n3, n2, n1);  // gehen wir mal mutig von dd.mm.jjjj aus
   }
 }
-
-namespace model
-{
 
 void operator>>= (const cxxtools::SerializationInfo& si, Strassenfest& strassenfest)
 {
@@ -48,6 +45,4 @@ void operator>>= (const cxxtools::SerializationInfo& si, Strassenfest& strassenf
     si.getMember("mail")          >>= strassenfest._mail;
     si.getMember("www")           >>= strassenfest._www;
     si.getMember("bemerkungen")   >>= strassenfest._bemerkungen;
-}
-
 }

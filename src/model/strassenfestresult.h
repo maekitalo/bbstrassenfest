@@ -6,15 +6,12 @@
 #ifndef STRASSENFESTRESULT_H
 #define STRASSENFESTRESULT_H
 
-#include <model/strassenfest.h>
+#include <strassenfest.h>
 
 namespace cxxtools
 {
   class SerializationInfo;
 }
-
-namespace model
-{
 
 class StrassenfestResult
 {
@@ -52,8 +49,6 @@ class StrassenfestResult
 };
 
 void operator>>= (const cxxtools::SerializationInfo& si, StrassenfestResult& strassenfestResult);
-
-}
 
 #endif // STRASSENFESTRESULT_H
 

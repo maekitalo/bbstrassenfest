@@ -1,5 +1,5 @@
-<%session scope="shared" include="model/strassenfest.h">
-model::Strassenfeste strassenfeste;
+<%session scope="shared" include="strassenfest.h">
+Strassenfeste strassenfeste;
 </%session>
 <%application scope="shared">
 std::vector<std::string> bezirke;

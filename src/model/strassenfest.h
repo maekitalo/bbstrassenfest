@@ -16,9 +16,6 @@ namespace cxxtools
   class SerializationInfo;
 }
 
-namespace model
-{
-
 class Strassenfest
 {
     friend void operator>>= (const cxxtools::SerializationInfo& si, Strassenfest& strassenfest);
@@ -56,7 +53,5 @@ public:
 void operator>>= (const cxxtools::SerializationInfo& si, Strassenfest& strassenfest);
 
 typedef std::vector<Strassenfest> Strassenfeste;
-
-}
 
 #endif // STRASSENFEST_H

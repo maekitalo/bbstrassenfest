@@ -3,8 +3,8 @@
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
 #include <cxxtools/log.h>
-#include <model/strassenfest.h>
-#include <manager/strassenfestmanager.h>
+#include <strassenfest.h>
+#include <strassenfestmanager.h>
 
 log_define("strasenfeste.controller")
 
@@ -24,7 +24,7 @@ namespace
 
     TNT_APPLICATION_SHARED_VAR(std::vector<std::string>, bezirke, ());
 
-    manager::StrassenfestManager manager;
+    StrassenfestManager manager;
 
     if (bezirke.empty())
     {
@@ -33,7 +33,7 @@ namespace
 
     if (qparam.arg<bool>("aktualisieren"))
     {
-      TNT_SESSION_SHARED_VAR(model::Strassenfeste, strassenfeste, ());
+      TNT_SESSION_SHARED_VAR(Strassenfeste, strassenfeste, ());
 
       strassenfeste = manager.getAllByBezirk(qparam.arg<std::string>("bezirk"));
     }

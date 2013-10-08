@@ -3,11 +3,8 @@
  *
  */
 
-#include <model/strassenfestresult.h>
+#include <strassenfestresult.h>
 #include <cxxtools/serializationinfo.h>
-
-namespace model
-{
 
 void operator>>= (const cxxtools::SerializationInfo& si, StrassenfestResult& strassenfestResult)
 {
@@ -20,6 +17,4 @@ void operator>>= (const cxxtools::SerializationInfo& si, StrassenfestResult& str
   siResults.getMember("items_per_page") >>= strassenfestResult._itemsPerPage;
 
   si.getMember("index") >>= strassenfestResult._strassenfeste;
-}
-
 }
