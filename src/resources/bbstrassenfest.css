@@ -34,5 +34,25 @@ body {
 }
 
 table.form th {
-  text-align: left;
+    text-align: left;
+}
+
+table.result {
+    width: 100%;
+    border: 2px solid #4076ff;
+    border-spacing: 0px;
+    border-collapse: collapse;
+}
+
+table.result td {
+    border: 1px solid #4076ff;
+    padding: 2px;
+}
+
+table.result th {
+    border: 1px solid #4076ff;
+}
+
+table.result th {
+    background-color: #cce;
 }
