@@ -11,16 +11,37 @@
 #include <cxxtools/log.h>
 #include <cxxtools/query_params.h>
 #include <cxxtools/convert.h>
+#include <cxxtools/http/client.h>
+#include <cxxtools/refcounted.h>
 #include <stdio.h>
 
 log_define("strassenfest.manager")
 
-StrassenfestManager::StrassenfestManager()
+////////////////////////////////////////////////////////////////////////
+// declare implementation interface for StrassenfestManager
+
+class StrassenfestManager::Impl : public cxxtools::RefCounted
 {
-  _client.connect(Configuration::it().berlinUrl());
+    cxxtools::http::Client _client;
+
+  public:
+    Impl();
+
+    std::vector<std::string> getBezirke();
+    StrassenfestResult search(const std::string& keyword, const std::string& bezirk,
+        const cxxtools::Date& von_from, const cxxtools::Date& von_to, const cxxtools::Date& bis,
+        unsigned ipp, unsigned page);
+
+    Strassenfeste getAll();
+    Strassenfeste getAllByBezirk(const std::string& bezirk);
+};
+
+StrassenfestManager::Impl::Impl()
+  : _client(Configuration::it().berlinUrl())
+{
 }
 
-std::vector<std::string> StrassenfestManager::getBezirke()
+std::vector<std::string> StrassenfestManager::Impl::getBezirke()
 {
   static const char* bezirke[] = {
   	"-- Alles --",
@@ -45,7 +66,7 @@ std::vector<std::string> StrassenfestManager::getBezirke()
   return ret;
 }
 
-Strassenfeste StrassenfestManager::getAll()
+Strassenfeste StrassenfestManager::Impl::getAll()
 {
   cxxtools::net::Uri uri = Configuration::it().berlinUrl();
   std::string results = _client.get(uri.path() + "?q=&bezirk=--+Alles+--&von_from=&von_to=&bis=&ipp=10000");
@@ -58,7 +79,7 @@ Strassenfeste StrassenfestManager::getAll()
   return r.strassenfeste();
 }
 
-Strassenfeste StrassenfestManager::getAllByBezirk(const std::string& bezirk)
+Strassenfeste StrassenfestManager::Impl::getAllByBezirk(const std::string& bezirk)
 {
   cxxtools::net::Uri uri = Configuration::it().berlinUrl();
 
@@ -79,7 +100,7 @@ Strassenfeste StrassenfestManager::getAllByBezirk(const std::string& bezirk)
   return r.strassenfeste();
 }
 
-StrassenfestResult StrassenfestManager::search(const std::string& keyword, const std::string& bezirk,
+StrassenfestResult StrassenfestManager::Impl::search(const std::string& keyword, const std::string& bezirk,
     const cxxtools::Date& von_from, const cxxtools::Date& von_to, const cxxtools::Date& bis,
     unsigned ipp, unsigned page)
 {
@@ -121,3 +142,61 @@ StrassenfestResult StrassenfestManager::search(const std::string& keyword, const
 
   return r;
 }
+
+////////////////////////////////////////////////////////////////////////
+// StrassenfestManager
+
+StrassenfestManager::StrassenfestManager()
+  : _impl(new Impl())
+{
+  _impl->addRef();
+}
+
+StrassenfestManager::~StrassenfestManager()
+{
+  if (_impl && _impl->release() == 0)
+    delete _impl;
+}
+
+StrassenfestManager::StrassenfestManager(const StrassenfestManager& other)
+  : _impl(other._impl)
+{
+  if (_impl)
+    _impl->addRef();
+}
+
+StrassenfestManager& StrassenfestManager::operator=(const StrassenfestManager& other)
+{
+  if (_impl && _impl->release() == 0)
+    delete _impl;
+
+  _impl = other._impl;
+
+  if (_impl)
+    _impl->addRef();
+
+  return *this;
+}
+
+std::vector<std::string> StrassenfestManager::getBezirke()
+{
+  return _impl->getBezirke();
+}
+
+Strassenfeste StrassenfestManager::getAll()
+{
+  return _impl->getAll();
+}
+
+Strassenfeste StrassenfestManager::getAllByBezirk(const std::string& bezirk)
+{
+  return _impl->getAllByBezirk(bezirk);
+}
+
+StrassenfestResult StrassenfestManager::search(const std::string& keyword, const std::string& bezirk,
+    const cxxtools::Date& von_from, const cxxtools::Date& von_to, const cxxtools::Date& bis,
+    unsigned ipp, unsigned page)
+{
+  return _impl->search(keyword, bezirk, von_from, von_to, bis, ipp, page);
+}
+
