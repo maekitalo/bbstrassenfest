@@ -11,6 +11,15 @@ AC_CHECK_HEADER([tnt/tntnet.h], , AC_MSG_ERROR([tntnet headers not found]))
 AC_CHECK_PROGS(ECPPC, [ecppc])
 AC_PROG_SED
 
+AC_COMPILE_IFELSE(
+  [AC_LANG_SOURCE([
+    #include <cxxtools/date.h>
+    cxxtools::Date d("2013-10-09");
+  ])],
+  ,
+  AC_MSG_ERROR([cxxtools not up to date - please upgrade])
+)
+
 AC_OUTPUT([
     Makefile
     src/Makefile

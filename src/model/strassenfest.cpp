@@ -10,17 +10,14 @@ namespace
 {
   cxxtools::Date str2date(const std::string& s)
   {
-    std::istringstream in(s);
-    char ch;
-    unsigned n1, n2, n3;
-    in >> n1 >> ch >> n2 >> ch >> n3;
-    if (!in)
-      throw std::runtime_error("invalid date: \"" + s + '"');
-
-    if (ch == '-')  // Format: jjjj-mm-dd
-      return cxxtools::Date(n1, n2, n3);
-    else
-      return cxxtools::Date(n3, n2, n1);  // gehen wir mal mutig von dd.mm.jjjj aus
+    try
+    {
+      return cxxtools::Date(s, "%Y-%m-%d");
+    }
+    catch (const std::exception&)
+    {
+      return cxxtools::Date(s, "%d.%m.%Y");
+    }
   }
 }
 

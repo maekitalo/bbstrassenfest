@@ -11,21 +11,6 @@ log_define("suche.controller")
 
 namespace
 {
-  cxxtools::Date str2date(const std::string& s)
-  {
-    std::istringstream in(s);
-    char ch;
-    unsigned n1, n2, n3;
-    in >> n1 >> ch >> n2 >> ch >> n3;
-    if (!in)
-      throw std::runtime_error("invalid date: \"" + s + '"');
-
-    if (ch == '-')  // Format: jjjj-mm-dd
-      return cxxtools::Date(n1, n2, n3);
-    else
-      return cxxtools::Date(n3, n2, n1);  // gehen wir mal mutig von dd.mm.jjjj aus
-  }
-
   class sucheController : public tnt::Component
   {
     public:
@@ -60,11 +45,11 @@ namespace
 
       cxxtools::Date from;
       if (!von_from.empty())
-        from = str2date(von_from);
+        from = cxxtools::Date(von_from, "%d.%m.%Y");
 
       cxxtools::Date to;
       if (!von_to.empty())
-        to = str2date(von_to);
+        to = cxxtools::Date(von_to, "%d.%m.%Y");
 
       strassenfestResult = manager.search(q, bezirk, from, to, cxxtools::Date(), 20, 1);
     }
