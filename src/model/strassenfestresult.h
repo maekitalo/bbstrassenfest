@@ -25,7 +25,7 @@ class StrassenfestResult
     std::string _success;
     unsigned _resultCount;
     unsigned _itemsPerPage;
-   Strassenfeste _strassenfeste;
+    Strassenfeste _strassenfeste;
 
   public:
     Messages::size_type messagesSize() const
@@ -36,6 +36,7 @@ class StrassenfestResult
 
     unsigned resultCount() const    { return _resultCount; }
     unsigned itemsPerPage() const   { return _itemsPerPage; }
+    unsigned pages() const          { return (_resultCount + _itemsPerPage - 1) / _itemsPerPage; }
 
     Strassenfeste strassenfeste() const
     { return _strassenfeste; }
