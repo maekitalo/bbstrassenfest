@@ -20,7 +20,6 @@
     <div id="menu">
       <ul class="nav">
         <li class="navitem"><a href="/">Home</a></li>
-        <li class="navitem"><a href="/strassenfeste">strassenfeste</a></li>
         <li class="navitem"><a href="/suche">suche</a></li>
       </ul>
     </div>

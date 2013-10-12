@@ -9,7 +9,6 @@ noinst_HEADERS = \
 	model/strassenfestresult.h
 
 ecppSources = \
-	view/strassenfeste.ecpp \
 	view/suche.ecpp \
 	index.ecpp \
 	webmain.ecpp
@@ -36,7 +35,6 @@ staticSources = \
 	resources/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js
 
 bbstrassenfest_SOURCES = \
-	controller/strassenfeste.cpp \
 	controller/suche.cpp \
 	main.cpp \
 	configuration.cpp \

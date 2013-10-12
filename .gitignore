@@ -29,3 +29,4 @@ src/bbstrassenfest
 src/resources.cpp
 src/view/*.cpp
 src/webmain.cpp
+src/index.cpp

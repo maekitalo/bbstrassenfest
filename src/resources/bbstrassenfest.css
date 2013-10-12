@@ -18,17 +18,23 @@ body {
     padding-bottom: 20px;
     margin: 0px auto;
     height: 20px;
-    box-shadow: 0 8px 10px -10px black;
-    font-size: 18px;
+    font-size: 28px;
+    font-weight: bold;
 }
 
 #menu li {
     display: inline-block;
 }
 
+.nav {
+    border-bottom: 1px solid #4076ff;
+}
+
 .navitem {
     padding: 5px;
-    border: 1px solid #4076ff;
+    border-top: 1px solid #4076ff;
+    border-left: 1px solid #4076ff;
+    border-right: 1px solid #4076ff;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
 }
@@ -42,6 +48,7 @@ table.result {
     border: 2px solid #4076ff;
     border-spacing: 0px;
     border-collapse: collapse;
+    margin-top: 10px;
 }
 
 table.result td {
