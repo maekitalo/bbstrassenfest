@@ -9,7 +9,7 @@
 #include <string>
 #include <vector>
 #include <cxxtools/date.h>
-#include <cxxtools/string.h>
+#include <cxxtools/string.h>  // unicode string class cxxtools::String
 
 namespace cxxtools
 {

@@ -10,6 +10,9 @@ std::vector<std::string> bezirke;
 <%request scope="shared" include="strassenfestresult.h">
 StrassenfestResult strassenfestResult;
 </%request>
+<%session scope="shared">
+unsigned pageNo = 1;
+</%session>
 <script>
 
   $(function() {
@@ -57,13 +60,22 @@ const Strassenfeste& strassenfeste = strassenfestResult.strassenfeste();
     <td><input type="submit" id="suchen" name="suchen" value="Suchen"></td>
   </tr>
  </table>
-</form>
-
-% if (!strassenfeste.empty()) {
 
 <hr>
 
-<div class="resultcount"><span class="resultcount"><$ strassenfeste.size() $></span> Ergebnisse gefunden</div>
+% if (strassenfeste.empty()) {
+
+Keine Ergebnisse
+
+% } else {
+
+<div class="resultcount"><span class="resultvalue"><$ strassenfestResult.resultCount() $></span> Ergebnisse gefunden</div>
+<div class="pager">
+Seite <span class="resultvalue"><$ pageNo $></span> von <span class="resultvalue"><$ strassenfestResult.pages() $></span> Seiten
+
+<input type="submit" name="previousPage" value="vorige Seite"<? pageNo <= 1 ? " disabled"?>>
+<input type="submit" name="nextPage" value="nächste Seite"<? pageNo >= strassenfestResult.pages() ? " disabled"?>>
+</div>
 
 <table class="result">
   <tr>
@@ -87,3 +99,5 @@ const Strassenfeste& strassenfeste = strassenfestResult.strassenfeste();
 </table>
 
 % }
+
+</form>

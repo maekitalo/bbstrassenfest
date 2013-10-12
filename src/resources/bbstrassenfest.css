@@ -56,3 +56,8 @@ table.result th {
 table.result th {
     background-color: #cce;
 }
+
+.resultvalue {
+    font-style: italic;
+    font-weight: bold;
+}
