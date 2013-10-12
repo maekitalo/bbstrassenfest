@@ -1,6 +1,7 @@
 # http://www.gnu.org/software/automake
 
 Makefile.in
+Makefile
 
 # http://www.gnu.org/software/autoconf
 
@@ -11,3 +12,20 @@ Makefile.in
 /depcomp
 /install-sh
 /missing
+
+/config.h
+/config.h.in
+/config.log
+/config.status
+/stamp-h1
+.deps
+*.deps
+*.o
+.dirstamp
+
+# generated files
+
+src/bbstrassenfest
+src/resources.cpp
+src/view/*.cpp
+src/webmain.cpp
