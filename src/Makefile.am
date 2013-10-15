@@ -47,7 +47,7 @@ nodist_bbstrassenfest_SOURCES = \
 	resources.cpp
 
 bbstrassenfest_CXXFLAGS = -I$(srcdir)/model -I$(srcdir)/manager
-bbstrassenfest_LDFLAGS = -lcxxtools -ltntnet -lcxxtools-json
+bbstrassenfest_LDFLAGS = -lcxxtools -ltntnet -lcxxtools-http -lcxxtools-json
 
 CLEANFILES = $(ecppSources:.ecpp=.cpp) $(ecppSources:.ecpp=.deps) resources.cpp
 
