@@ -6,6 +6,7 @@
 #include <cxxtools/log.h>
 #include <strassenfestresult.h>
 #include <strassenfestmanager.h>
+#include <suchesession.h>
 
 log_define("suche.controller")
 
@@ -24,14 +25,7 @@ namespace
     TNT_APPLICATION_SHARED_VAR(std::vector<std::string>, bezirke, ());
     TNT_REQUEST_SHARED_VAR(StrassenfestResult, strassenfestResult, ());
 
-    TNT_SESSION_SHARED_VAR(std::string, q, ());
-    TNT_SESSION_SHARED_VAR(std::string, bezirk, ());
-    TNT_SESSION_SHARED_VAR(std::string, von_from, ());
-    TNT_SESSION_SHARED_VAR(std::string, von_to, ());
-    TNT_SESSION_SHARED_VAR(cxxtools::Date, from, ());
-    TNT_SESSION_SHARED_VAR(cxxtools::Date, to, ());
-    TNT_SESSION_SHARED_VAR(unsigned, pageNo, (1));
-    TNT_SESSION_SHARED_VAR(unsigned, itemsPerPage, (20));
+    TNT_SESSION_SHARED_VAR(SucheSession, suche, ());
 
     log_debug("sucheController; q=" << qparam.getUrl());
 
@@ -46,30 +40,33 @@ namespace
     {
       log_debug("suchen");
 
-      q        = qparam.arg<std::string>("q");
-      bezirk   = qparam.arg<std::string>("bezirk");
+      suche.q        = qparam.arg<std::string>("q");
+      suche.bezirk   = qparam.arg<std::string>("bezirk");
 
-      von_from = qparam.arg<std::string>("von_from");
-      von_to   = qparam.arg<std::string>("von_to");
+      suche.von_from = qparam.arg<std::string>("von_from");
+      suche.von_to   = qparam.arg<std::string>("von_to");
 
-      if (!von_from.empty())
-        from = cxxtools::Date(von_from, "%d.%m.%Y");
+      if (!suche.von_from.empty())
+        suche.from = cxxtools::Date(suche.von_from, "%d.%m.%Y");
 
-      if (!von_to.empty())
-        to = cxxtools::Date(von_to, "%d.%m.%Y");
+      if (!suche.von_to.empty())
+        suche.to = cxxtools::Date(suche.von_to, "%d.%m.%Y");
 
-      pageNo = 1;
-      strassenfestResult = manager.search(q, bezirk, from, to, cxxtools::Date(), itemsPerPage, pageNo);
+      suche.pageNo = 1;
+      strassenfestResult = manager.search(suche.q, suche.bezirk, suche.from, suche.to,
+        cxxtools::Date(), suche.itemsPerPage, suche.pageNo);
     }
     else if (qparam.arg<bool>("previousPage"))
     {
-      --pageNo;
-      strassenfestResult = manager.search(q, bezirk, from, to, cxxtools::Date(), itemsPerPage, pageNo);
+      --suche.pageNo;
+      strassenfestResult = manager.search(suche.q, suche.bezirk, suche.from, suche.to,
+        cxxtools::Date(), suche.itemsPerPage, suche.pageNo);
     }
     else if (qparam.arg<bool>("nextPage"))
     {
-      ++pageNo;
-      strassenfestResult = manager.search(q, bezirk, from, to, cxxtools::Date(), itemsPerPage, pageNo);
+      ++suche.pageNo;
+      strassenfestResult = manager.search(suche.q, suche.bezirk, suche.from, suche.to,
+        cxxtools::Date(), suche.itemsPerPage, suche.pageNo);
     }
 
     // Return DECLINED to tell tntnet to continue processing with next mapping.

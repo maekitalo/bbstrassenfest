@@ -10,8 +10,8 @@ std::vector<std::string> bezirke;
 <%request scope="shared" include="strassenfestresult.h">
 StrassenfestResult strassenfestResult;
 </%request>
-<%session scope="shared">
-unsigned pageNo = 1;
+<%session scope="shared" include="suchesession.h">
+SucheSession suche;
 </%session>
 <script>
 
@@ -71,10 +71,10 @@ Keine Ergebnisse
 
 <div class="resultcount"><span class="resultvalue"><$ strassenfestResult.resultCount() $></span> Ergebnisse gefunden</div>
 <div class="pager">
-Seite <span class="resultvalue"><$ pageNo $></span> von <span class="resultvalue"><$ strassenfestResult.pages() $></span> Seiten
+Seite <span class="resultvalue"><$ suche.pageNo $></span> von <span class="resultvalue"><$ strassenfestResult.pages() $></span> Seiten
 
-<input type="submit" name="previousPage" value="vorige Seite"<? pageNo <= 1 ? " disabled"?>>
-<input type="submit" name="nextPage" value="nächste Seite"<? pageNo >= strassenfestResult.pages() ? " disabled"?>>
+<input type="submit" name="previousPage" value="vorige Seite"<? suche.pageNo <= 1 ? " disabled"?>>
+<input type="submit" name="nextPage" value="nächste Seite"<? suche.pageNo >= strassenfestResult.pages() ? " disabled"?>>
 </div>
 
 <table class="result">
