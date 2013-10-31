@@ -9,20 +9,14 @@
 #include <strassenfest.h>
 #include <strassenfestresult.h>
 #include <cxxtools/date.h>
+#include <cxxtools/http/client.h>
 #include <vector>
 #include <string>
 
 class StrassenfestManager
 {
-    class Impl;
-
   public:
     StrassenfestManager();
-    ~StrassenfestManager();
-
-    // copy and assignment
-    StrassenfestManager(const StrassenfestManager&);
-    StrassenfestManager& operator=(const StrassenfestManager&);
 
     // manager methods
 
@@ -36,7 +30,7 @@ class StrassenfestManager
     Strassenfeste getAllByBezirk(const std::string& bezirk);
 
   private:
-    Impl* _impl;
+    cxxtools::http::Client _client;
 };
 
 #endif // STRASSENFESTMANAGER_H
