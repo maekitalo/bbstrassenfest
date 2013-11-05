@@ -33,6 +33,12 @@ class Configuration
     const cxxtools::LogConfiguration& loggingConfiguration() const
     { return _loggingConfiguration; }
 
+    bool daemon() const
+    { return _daemon; }
+
+    const std::string& pidfile() const
+    { return _pidfile; }
+
   private:
     Configuration();
     Configuration(const Configuration&);  // no implementation
@@ -42,6 +48,9 @@ class Configuration
     unsigned short _listenPort;
     unsigned       _sessionTimeout;
     std::string    _berlinUrl;
+    bool           _daemon;
+    std::string    _pidfile;
+
     cxxtools::LogConfiguration _loggingConfiguration;
 };
 

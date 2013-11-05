@@ -3,6 +3,7 @@
 #include <tnt/tntnet.h>
 #include <tnt/configurator.h>
 #include <cxxtools/log.h>
+#include <cxxtools/posix/daemonize.h>
 
 log_define("bbstrassenfest")
 
@@ -18,6 +19,9 @@ int main(int argc, char* argv[])
       configuration.readConfiguration("bbstrassenfest.conf");
 
     log_init(configuration.loggingConfiguration());
+
+    if (configuration.daemon())
+      cxxtools::posix::daemonize(configuration.pidfile());
 
     tnt::Tntnet app;
     app.listen(configuration.listenIp(), configuration.listenPort());

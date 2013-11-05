@@ -28,12 +28,16 @@ void operator>>= (const cxxtools::SerializationInfo& si, Configuration& config)
   si.getMember("listen.port") >>= config._listenPort;
   si.getMember("sessiontimeout", config._sessionTimeout);  // sessiontimeout is optional
   si.getMember("berlinUrl") >>= config._berlinUrl;
+  if (!si.getMember("daemon", config._daemon))
+    config._daemon = false;
+  si.getMember("pidfile") >>= config._pidfile;
   si >>= config._loggingConfiguration;
 }
 
 Configuration::Configuration()
     : _listenPort(0),
-      _sessionTimeout(0)
+      _sessionTimeout(0),
+      _daemon(false)
 { }
 
 void Configuration::readConfiguration(const std::string& file)
