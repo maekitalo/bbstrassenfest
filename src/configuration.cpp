@@ -30,7 +30,7 @@ void operator>>= (const cxxtools::SerializationInfo& si, Configuration& config)
   si.getMember("berlinUrl") >>= config._berlinUrl;
   if (!si.getMember("daemon", config._daemon))
     config._daemon = false;
-  si.getMember("pidfile") >>= config._pidfile;
+  si.getMember("pidfile", config._pidfile);
   si >>= config._loggingConfiguration;
 }
 
